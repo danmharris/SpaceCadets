@@ -29,4 +29,16 @@ public class Hypercycloid {
 			lastY = y;
 		}
 	}
+	
+	public double getR(){
+		return this.R;
+	}
+	
+	public double getr(){
+		return this.r;
+	}
+	
+	public double getO(){
+		return this.O;
+	}
 }

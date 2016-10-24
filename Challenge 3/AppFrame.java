@@ -21,23 +21,28 @@ public class AppFrame extends JFrame implements ActionListener{
 		
 		canvas = new CanvasPane();
 		
+		//Sets up menu bar with options
 		JMenuBar menuBar = new JMenuBar();
 		JMenu file = new JMenu("File");
 		JMenuItem newGraph = new JMenuItem("New Graph");
+		JMenuItem deleteGraph = new JMenuItem("Delete Graph");
 		JMenuItem clearCanvas = new JMenuItem("Clear Canvas");
 		
 		JMenu help = new JMenu("Help");
 		JMenuItem about = new JMenuItem("About");
 		
 		newGraph.setActionCommand("newGraph");
+		deleteGraph.setActionCommand("deleteGraph");
 		clearCanvas.setActionCommand("clearCanvas");
 		about.setActionCommand("about");
 		
 		newGraph.addActionListener(this);
+		deleteGraph.addActionListener(this);
 		clearCanvas.addActionListener(this);
 		about.addActionListener(this);
 		
 		file.add(newGraph);
+		file.add(deleteGraph);
 		file.add(clearCanvas);
 		help.add(about);
 		menuBar.add(file);
@@ -51,12 +56,15 @@ public class AppFrame extends JFrame implements ActionListener{
 	
 	}
 
+	//Event handler for menu button icons
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		switch (e.getActionCommand()){
 		case "newGraph":
-			new OptionsFrame(canvas);
+			new OptionsFrame(canvas); //Passes canvas to the options dialog so that it can access the graphs list
+			break;
+		case "deleteGraph":
+			new DeleteFrame(canvas);
 			break;
 		case "clearCanvas":
 			canvas.clear();
