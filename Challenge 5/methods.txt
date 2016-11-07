@@ -1,0 +1,18 @@
+clear X; //Hello World
+clear Y;
+
+def incX;
+incr X;
+incr X;
+end;
+
+def incY;
+incr Y;
+incr Y;
+incr Y;
+end;
+ 
+run incX;
+run incX;
+run incY;
+set X 2;

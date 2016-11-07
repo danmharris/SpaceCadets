@@ -1,0 +1,17 @@
+clear X;
+incr X;
+incr X;
+clear Y;
+incr Y;
+incr Y;
+incr Y;
+clear Z;
+clear W;
+if X not 0 do;
+	incr Z;
+end;
+if W == 0;
+	incr Z;
+else;
+	incr W;
+end;
