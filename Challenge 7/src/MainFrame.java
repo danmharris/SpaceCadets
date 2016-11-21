@@ -13,7 +13,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class MainFrame extends JFrame implements ActionListener{
-	CanvasPane pane;
 	JPanel panel;
 	
 	public MainFrame(){
@@ -21,9 +20,6 @@ public class MainFrame extends JFrame implements ActionListener{
 		this.setTitle("Circle Detector");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setResizable(false);
-		
-		pane = new CanvasPane();
-		pane.setPreferredSize(new Dimension(500,500));
 		
 		panel = new JPanel();
 		panel.setPreferredSize(new Dimension(500,500));
@@ -48,7 +44,8 @@ public class MainFrame extends JFrame implements ActionListener{
 			File file = new File(fc.getSelectedFile().getPath());
 			ImageHandler ih = new ImageHandler(file);
 			ih.createGrayscale();
-			panel.getGraphics().drawImage(ih.getGrayscaleImage(),0,0,500,500,null);
+			ih.doSobelDetection();
+			panel.getGraphics().drawImage(ih.getSobel(),0,0,500,500,null);
 			break;
 		}
 		
