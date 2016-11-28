@@ -2,6 +2,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -44,8 +45,15 @@ public class MainFrame extends JFrame implements ActionListener{
 			File file = new File(fc.getSelectedFile().getPath());
 			ImageHandler ih = new ImageHandler(file);
 			ih.createGrayscale();
-			ih.doSobelDetection();
-			panel.getGraphics().drawImage(ih.getSobel(),0,0,500,500,null);
+			ih.createSobel();
+			ih.createFinal();
+			//BufferedImage temp = new BufferedImage(500,500,BufferedImage.TYPE_BYTE_GRAY);
+			//temp.getGraphics().drawOval(0, 0, 300, 300);
+			panel.getGraphics().drawImage(ih.getFinal(),0,0,500,500,null);
+			//temp.getGraphics().fillRect(0, 0, 500, 500);
+			//panel.getGraphics().drawImage(temp,0,0,500,500,null);
+			//System.out.println(temp.getRGB(300,300));
+			
 			break;
 		}
 		

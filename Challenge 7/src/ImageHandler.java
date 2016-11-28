@@ -1,3 +1,5 @@
+import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -10,13 +12,15 @@ public class ImageHandler {
 	protected BufferedImage image;
 	protected BufferedImage gray;
 	protected BufferedImage sobel;
+	protected BufferedImage finalImage;
+	int[][] sobelArray;
 	
 	public ImageHandler(File file){
 		try {
 			BufferedImage tmp = ImageIO.read(file);
 			tmp.getScaledInstance(500, 500, Image.SCALE_SMOOTH);
 			
-			this.image = new BufferedImage(500,500,BufferedImage.TYPE_INT_ARGB);
+			this.image = new BufferedImage(500,500,BufferedImage.TYPE_INT_RGB);
 			this.image.getGraphics().drawImage(tmp,0,0,500,500,null);
 			
 		} catch (IOException e) {
@@ -39,52 +43,37 @@ public class ImageHandler {
 		gray.getGraphics().drawImage(this.image, 0,0,null);
 	}
 	
-	public void doSobelDetection(){
+	public void createSobel(){
 		sobel = new BufferedImage(500,500,BufferedImage.TYPE_BYTE_GRAY);
-		
+		SobelDetection detect = new SobelDetection(gray);
+		detect.doDetection();
+		sobelArray = detect.getSobelArray();
 		
 		
 		for (int y = 1; y < gray.getHeight()-1; y++){
 			for (int x = 1; x < gray.getWidth()-1; x++){
-				int[][] kernel = {
-						{gray.getRGB(x-1, y-1), gray.getRGB(x,y-1), gray.getRGB(x+1, y-1)},
-						{gray.getRGB(x-1, y), gray.getRGB(x,y-1), gray.getRGB(x+1, y)},
-						{gray.getRGB(x-1, y+1), gray.getRGB(x,y+1), gray.getRGB(x+1, y+1)}
-				};
-				sobel.setRGB(x, y, this.doConvolution(kernel));		
+				sobel.setRGB(x, y, Color.HSBtoRGB(0, 0, sobelArray[x][y]/1000));		
 			}
 		}
 		
 	}
 	
-	private int doConvolution(int[][] kernel){
-		int[][] gX = {
-				{-1,0,1},
-				{-2,0,2},
-				{-1,0,1}
-		};
-		
-		int[][] gY = {
-				{1,2,1},
-				{0,0,0},
-				{-1,-2,-1}	
-		};
-		
-		int gx = 0;
-		int gy = 0;
-		for (int y = 0; y < 3; y++){
-			for (int x = 0; x < 3; x++){
-				gx+= gX[x][y] * kernel[x][y];
-				gy+= gY[x][y] * kernel[x][y];
-			}
-		}
-		
-		double g = Math.sqrt(gx^2 + gy^2);
-		return (int)Math.round(g)*10;
-	}
 	
 	public BufferedImage getSobel(){
 		return this.sobel;
+	}
+	
+	public void createFinal(){
+		this.finalImage = this.image;
+		HoughTransform hough = new HoughTransform(sobelArray);
+		Circle c = hough.detectCircle();
+		Graphics g = finalImage.getGraphics();
+		g.setColor(Color.CYAN);
+		g.drawOval(c.getTopLeftX(), c.getTopLeftY(), c.getDiameter(), c.getDiameter());		
+	}
+	
+	public BufferedImage getFinal(){
+		return this.finalImage;
 	}
 
 }
