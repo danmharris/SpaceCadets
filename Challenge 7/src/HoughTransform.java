@@ -14,7 +14,7 @@ public class HoughTransform {
 		Circle c = new Circle();
 		ArrayList<HoughThread> threads = new ArrayList<HoughThread>();
 		
-		threads.add(new HoughThread(20,500,c,sobelArray));
+		threads.add(new HoughThread(100,500,c,sobelArray));
 		//threads.add(new HoughThread(60,120,c,sobelArray));
 		//threads.add(new HoughThread(120,180,c,sobelArray));
 		//threads.add(new HoughThread(180,240,c,sobelArray));
