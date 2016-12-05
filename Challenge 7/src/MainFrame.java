@@ -14,23 +14,28 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class MainFrame extends JFrame implements ActionListener{
-	JPanel panel;
+	JPanel finalPanel;
+	JPanel sobelPanel;
 	
 	public MainFrame(){
-		this.setSize(600,600);
+		this.setSize(1100,600);
 		this.setTitle("Circle Detector");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setResizable(false);
 		
-		panel = new JPanel();
-		panel.setPreferredSize(new Dimension(500,500));
+		sobelPanel = new JPanel();
+		sobelPanel.setPreferredSize(new Dimension(500,500));
+		
+		finalPanel = new JPanel();
+		finalPanel.setPreferredSize(new Dimension(500,500));
 		
 		JButton load = new JButton("Load Image");
 		load.setActionCommand("loadImage");
 		load.addActionListener(this);
 		
 		this.setLayout(new FlowLayout());
-		this.add(panel);
+		this.add(sobelPanel);
+		this.add(finalPanel);
 		this.add(load);
 		
 		this.setVisible(true);
@@ -49,7 +54,8 @@ public class MainFrame extends JFrame implements ActionListener{
 			ih.createFinal();
 			//BufferedImage temp = new BufferedImage(500,500,BufferedImage.TYPE_BYTE_GRAY);
 			//temp.getGraphics().drawOval(0, 0, 300, 300);
-			panel.getGraphics().drawImage(ih.getFinal(),0,0,500,500,null);
+			sobelPanel.getGraphics().drawImage(ih.getSobel(), 0, 0, 500, 500, null);
+			finalPanel.getGraphics().drawImage(ih.getFinal(),0,0,500,500,null);
 			//temp.getGraphics().fillRect(0, 0, 500, 500);
 			//panel.getGraphics().drawImage(temp,0,0,500,500,null);
 			//System.out.println(temp.getRGB(300,300));

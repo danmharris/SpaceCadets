@@ -35,8 +35,9 @@ public class HoughTransform {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println(c.getCentreX());
-		System.out.println(c.getCentreY());
+		System.out.println("X: "+ c.getCentreX());
+		System.out.println("Y: "+c.getCentreY());
+		System.out.println("D: "+c.getDiameter());
 		return c;
 	}
 }
